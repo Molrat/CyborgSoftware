@@ -1,7 +1,7 @@
 # CI / CD
 
-> **Status: `[SPEC]` — nothing built.** No workflow exists, and there is no
-> deployment target yet. This page is the design to build towards; each stage is
+> **Status: `[SPEC]` — the pipeline is not built.** The only workflow is the
+> website preview below; there is no deployment target for the product yet. This page is the design to build towards; each stage is
 > marked the same way [architecture/](architecture/) marks its sections, so the
 > page never claims a stage that does not run.
 
@@ -9,6 +9,24 @@
 > there is a staging environment, and which registry holds images. Decided with
 > the user before the first deployment sub-phase — each is an architectural
 > decision (root `CLAUDE.md` rule 3).
+
+## Website preview `[BUILT]`
+
+Decided 2026-11-02 by the user: the website design draft is published to
+**GitHub Pages** so it can be viewed at a public URL
+(`https://molrat.github.io/CyborgSoftware/`).
+[`.github/workflows/website-preview.yml`](../.github/workflows/website-preview.yml)
+copies [`docs/product/drafts/website-draft-1.html`](product/drafts/website-draft-1.html)
+to `index.html` and deploys it on every push to `main` that touches the drafts,
+or by hand from the Actions tab.
+
+It is a preview of a static draft, not the product's deployment: it runs no
+tests and touches none of the stages below. Requires the repository's Pages
+source to be set to *GitHub Actions* and `main` to be the default branch (the
+`github-pages` environment only accepts the default branch). Where the real
+product deploys is still the `[OPEN]` question above — GitHub Pages serves
+static files only, so it can host the real site only if that site needs no
+server.
 
 ---
 

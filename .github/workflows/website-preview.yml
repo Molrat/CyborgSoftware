@@ -1,0 +1,40 @@
+# Publishes the current website design draft to GitHub Pages, so it can be
+# viewed and shared at a public URL. A preview of a draft, not the product's
+# deployment — see docs/CI-CD.md, "Website preview".
+name: Website preview
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - docs/product/drafts/**
+      - .github/workflows/website-preview.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble the site
+        run: |
+          mkdir _site
+          cp docs/product/drafts/website-draft-1.html _site/index.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
