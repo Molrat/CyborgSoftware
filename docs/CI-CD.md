@@ -17,8 +17,8 @@ Decided 2026-11-02 by the user: the website design draft is published to
 (`https://molrat.github.io/CyborgSoftware/`).
 [`.github/workflows/website-preview.yml`](../.github/workflows/website-preview.yml)
 copies [`docs/product/drafts/website-draft-1.html`](product/drafts/website-draft-1.html)
-to `index.html` and deploys it on every push to `main` that touches the drafts,
-or by hand from the Actions tab.
+to `index.html` and deploys it on every push to `main` (the user's choice: every
+commit to `main` republishes), or by hand from the Actions tab.
 
 It is a preview of a static draft, not the product's deployment: it runs no
 tests and touches none of the stages below. Requires the repository's Pages

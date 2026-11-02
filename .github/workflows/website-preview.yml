@@ -6,9 +6,6 @@ name: Website preview
 on:
   push:
     branches: [main]
-    paths:
-      - docs/product/drafts/**
-      - .github/workflows/website-preview.yml
   workflow_dispatch:
 
 permissions:
