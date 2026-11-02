@@ -38,8 +38,13 @@ reference: framer.com. *(Given by the user, 2026-11-02.)*
 
 **Content**: the user has not written copy and asked for a complete-looking site
 to be drafted and refined from there. Drafted copy is a proposal until the user
-has seen it. A first visual draft was made on 2026-11-02 (a claude.ai artifact,
-not code in this repository).
+has seen it. A first visual draft was made on 2026-11-02:
+[drafts/website-draft-1.html](drafts/website-draft-1.html), a single static page
+(also published as a claude.ai artifact). It is a design reference for look,
+structure and proposed copy — not the build, and not an approved specification.
+Its unconfirmed claims are listed in [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md)
+Q1–Q4; it also states a one-working-day reply time and "no setup fees", which
+nobody has confirmed either.
 
 ## Who uses it
 
