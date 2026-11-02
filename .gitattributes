@@ -1,0 +1,9 @@
+# Shell scripts run as Docker entrypoints inside Linux containers, and as
+# Claude Code hooks under Git Bash — a CRLF shebang line ("#!/usr/bin/env bash\r")
+# makes the container look for a program literally named "bash\r", which doesn't
+# exist. Force LF regardless of the checkout platform's core.autocrlf setting.
+*.sh text eol=lf
+
+# PDFs are binary. A generated PDF that happens to contain no CR bytes is
+# guessed "text", and core.autocrlf would rewrite it on a Windows checkout.
+*.pdf binary

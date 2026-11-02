@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(git status*)", "Bash(git diff*)", "Bash(git log*)",
+      "Bash(git show*)", "Bash(git branch*)", "Bash(git ls-files*)",
+      "Bash(dotnet build*)", "Bash(dotnet test*)", "Bash(dotnet restore*)",
+      "PowerShell(.\\run-tests.ps1*)", "Bash(./run-tests.ps1*)",
+      "Bash(docker compose*)",
+      "Bash(npm ci*)", "Bash(npm run build*)", "Bash(npm run test*)", "Bash(npm run lint*)", "Bash(npx vitest*)",
+      "Bash(npx playwright test*)",
+      "mcp__playwright"
+    ]
+  },
+  "enabledMcpjsonServers": ["playwright"],
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/block-applied-migration.sh\"",
+            "timeout": 10,
+            "statusMessage": "Checking the append-only migration rule"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "if": "Bash(git commit*)",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/check-doc-handoff.sh\"",
+            "timeout": 15,
+            "statusMessage": "Checking the doc handoff"
+          },
+          {
+            "type": "command",
+            "shell": "bash",
+            "if": "Bash(git commit*)",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/check-testing-inventory.sh\"",
+            "timeout": 15,
+            "statusMessage": "Checking the test inventory"
+          },
+          {
+            "type": "command",
+            "shell": "bash",
+            "if": "Bash(git commit*)",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/check-browser-journey.sh\"",
+            "timeout": 15,
+            "statusMessage": "Checking the browser journeys"
+          },
+          {
+            "type": "command",
+            "shell": "bash",
+            "if": "Bash(git commit*)",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/check-kit-exemptions.sh\"",
+            "timeout": 15,
+            "statusMessage": "Checking the design-system exemptions"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/check-edited-file.sh\"",
+            "timeout": 45,
+            "statusMessage": "Checking coding standards and the design system"
+          },
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/frontend-related-tests.sh\"",
+            "timeout": 90,
+            "statusMessage": "Running related frontend tests"
+          }
+        ]
+      }
+    ]
+  }
+}
